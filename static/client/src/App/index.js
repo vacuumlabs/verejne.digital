@@ -1,5 +1,6 @@
 import React from 'react'
 import SKico from '../../assets/images/SKico.png'
+import GoogleMap from './CustomGoogleMap'
 
 const App = ({ buttonText, toggleButtonText }) => (
   <div id="wrapper">
@@ -61,7 +62,8 @@ const App = ({ buttonText, toggleButtonText }) => (
 
       <div className="list-group" id="info_list" />
     </div>
-    <div id="map" />
+    {/*<div id="map" />*/}
+    <GoogleMap />
     <div id="legend">
       <iframe src="https://www.facebook.com/plugins/like.php?href=https%3A%2F%2Fwww.facebook.com%2Fverejne.digital&width=111&layout=button_count&action=like&size=small&show_faces=true&share=false&height=46&appId=" width="151" height="23" style={{ border: 'none', overflow: 'hidden' }} scrolling="no" frameBorder="0" allowTransparency="true" />
       <button type="button" className="close" onClick={() => $('#legend').hide()}><span aria-hidden="true">&times;</span></button>
