@@ -4,8 +4,8 @@ import { Provider } from 'react-redux'
 import App from './App'
 import { AppContainer } from 'react-hot-loader'
 import getConfiguredStore from './configureStore'
-// load bootstrap for reactstrap
-import 'bootstrap/dist/css/bootstrap.css'
+// load bootstrap for reactstrap, TODO enable when bootstrap removed from index.ejs
+// import 'bootstrap/dist/css/bootstrap.css'
 // load global scss
 import 'assets/scss/style.scss'
 // extend bluebird promise in dev mode
