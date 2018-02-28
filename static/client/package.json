@@ -21,6 +21,7 @@
     "import-glob-loader": "^1.1.0",
     "lodash": "^4.17.4",
     "node-sass": "^4.5.3",
+    "points-cluster": "^0.1.4",
     "react": "^15.6.1",
     "react-bind-closures": "^1.1.0",
     "react-bootstrap-modal": "^3.0.1",

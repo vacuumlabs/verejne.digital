@@ -35,7 +35,7 @@ export default class MyGreatPlace extends Component {
   render() {
     return (
       <div style={greatPlaceStyle}>
-        {this.props.text}
+        <span className="markerText">{this.props.numPoints}</span>
       </div>
     )
   }

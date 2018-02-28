@@ -2,6 +2,7 @@ import React, { PropTypes, Component } from 'react'
 import GoogleMap from 'google-map-react'
 import { map } from 'lodash'
 import Marker from './Marker'
+import supercluster from 'points-cluster'
 
 function Entity(eid, lat, lng, title, size, ds, level) {
   this.eid = eid
@@ -161,7 +162,7 @@ export default class CustomGoogleMap extends Component {
     xmlhttp.onreadystatechange = function() {
       if (xmlhttp.readyState === 4 && xmlhttp.status === 200) {
         if (req !== self.lastGetEntitiesRequest) {
-          console.log('Ignoring request ' + req + ' because new request was sent in the meantime.')
+          //console.log('Ignoring request ' + req + ' because new request was sent in the meantime.')
           return
         }
         let myArr = JSON.parse(xmlhttp.responseText)
@@ -205,13 +206,51 @@ export default class CustomGoogleMap extends Component {
   }
 
   generateMarkers(entities) {
-    this.setState({
-      entities,
-    })
+    this.createClusters(entities)
   }
 
+  handleMapChange = ({ center, zoom, bounds }) => {
+    this.setState(
+      {
+        mapOptions: {
+          center,
+          zoom,
+          bounds,
+        },
+      },
+    )
+    this.getEntities()
+  }
+
+  getClusters = entities => {
+    const clusters = supercluster(entities, {
+      minZoom: 0,
+      maxZoom: 16,
+      radius: 60,
+    })
+
+    return clusters(this.state.mapOptions)
+  };
+
+  createClusters = entities => {
+    console.log('xxx', entities.length, this.getClusters(entities).reduce((a, e) => a + e.numPoints, 0))
+    this.setState({
+      entities: this.state.mapOptions.bounds
+        ? this.getClusters(entities).map(({ wx, wy, numPoints, points }, i) => {
+          return {
+            lat: wy,
+            lng: wx,
+            numPoints: numPoints,
+            id: `${i}`,
+            points,
+          }
+        })
+        : [],
+    })
+  };
+
+
   render() {
-    console.log(this.state.entities)
     return (
       <div id="map">
         <GoogleMap
@@ -219,23 +258,17 @@ export default class CustomGoogleMap extends Component {
           center={this.props.center}
           zoom={this.props.zoom}
           options={createMapOptions}
-          onDrag={() => {
-            console.log('dragged')
-            this.getEntities()
-          }}
-          onZoomAnimationEnd={() => {
-            console.log('zoom changed')
-            this.getEntities()
-          }}
           onGoogleApiLoaded={({ map, maps }) => {this.mapReference = map}}
+          onChange={this.handleMapChange}
+          yesIWantToUseGoogleMapApiInternals
         >
           {map(this.state.entities, (e, i) => {
             return (
-              <Marker key={i} lat={e.lat} lng={e.lng} />
+              <Marker key={i} lat={e.lat} lng={e.lng} numPoints={e.numPoints} />
             )
           })}
         </GoogleMap>
-      </div>
+      </div >
     )
   }
 }
