@@ -1,6 +1,6 @@
 import React from 'react'
 import SKico from '../../assets/images/SKico.png'
-import GoogleMap from './CustomGoogleMap'
+import GoogleMap from '../GoogleMap'
 
 const App = ({ buttonText, toggleButtonText }) => (
   <div id="wrapper">

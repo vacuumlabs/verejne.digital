@@ -1,11 +1,12 @@
 import thunk from 'redux-thunk'
-import {createStore, applyMiddleware} from 'redux'
-import {createLogger} from 'redux-logger'
+import { createStore, applyMiddleware } from 'redux'
+import { createLogger } from 'redux-logger'
 import rootReducer from './rootReducer'
 import getInitialState from './initialState'
+import Api from './api'
 
 export default () => {
-  // Note(samo): We need a dummy logger first so we can provide it in the thunk before the store exists
+  const api = new Api()
   const logger = {
     log: () => null,
   }
@@ -14,7 +15,7 @@ export default () => {
   })
 
   const middlewares = [
-    thunk.withExtraArgument({logger}),
+    thunk.withExtraArgument({ api, logger }),
   ]
   if (process.env.NODE_ENV === 'development') {
     middlewares.push(

@@ -1,8 +1,8 @@
-import {setInitialState as appInitialState} from './App/state.js'
-import {compose} from './utils/helpers'
+import { setInitialState as googleMapInitialState } from './GoogleMap/state.js'
+import { compose } from './utils/helpers'
 
 const state = {}
 
 export default () => compose(
-  appInitialState,
+  googleMapInitialState,
 )(state)
