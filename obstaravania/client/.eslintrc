@@ -1,0 +1,14 @@
+{
+  "extends": "vacuumlabs",
+  "rules": {
+    "object-curly-spacing": 0
+  },
+  "env": {
+    "node": true,
+    "browser": true,
+    "jest": true
+  },
+  "globals": {
+    "Promise": true
+  }
+}
