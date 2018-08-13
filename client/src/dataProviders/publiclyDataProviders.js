@@ -6,9 +6,9 @@ import {
   setNewEntities,
   setNewEntityDetail,
 } from '../actions/verejneActions'
-
 import type {Address, NewEntity, EntityDetails} from '../state'
 import type {Dispatch} from '../types/reduxTypes'
+import {ListGroupLoadingComponent} from '../components/Loading'
 
 const dispatchSearchEids = () => (ref: string, data: Array<{eid: string}>, dispatch: Dispatch) =>
   dispatch(setEntitySearchEids(data))
@@ -54,6 +54,7 @@ export const entityDetailProvider = (entityId: string) => {
     ],
     onData: [dispatchEntityDetails],
     keepAliveFor: 60 * 60 * 1000,
+    loadingComponent: <ListGroupLoadingComponent width="20" height="20" />,
   }
 }
 
