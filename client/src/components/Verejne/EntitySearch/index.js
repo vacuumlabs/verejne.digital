@@ -48,45 +48,13 @@ const EntitySearch = ({
   }
 
   return (
-    <Modal
-      isOpen={entitySearchModalOpen}
-      toggle={toggleModalOpen}
-      className={className}
-      autoFocus
-      size="md"
-    >
-      <ModalHeader toggle={toggleModalOpen}>{FIND_ENTITY_TITLE}</ModalHeader>
-      <ModalBody>
-        <Form onSubmit={findEntities}>
-          <FormGroup>
-            <InputGroup>
-              <Input
-                type="text"
-                className="form-control"
-                placeholder={FIND_ENTITY_TITLE}
-                value={entitySearchValue}
-                onChange={setEntitySearchValue}
-                ref={input => input && ReactDOM.findDOMNode(input).focus()}
-              />
-              <InputGroupAddon addonType="append">
-                <Button color="primary" onClick={findEntities}>
-                  {FIND_ENTITY_TITLE}
-                </Button>
-              </InputGroupAddon>
-            </InputGroup>
-            <FormText>
-              {entitySearchFor && `${plurality(entitySearchEids.length)} pre "${entitySearchFor}".`}
-            </FormText>
-          </FormGroup>
-        </Form>
-        <EntitySearchResult />
-      </ModalBody>
-      <ModalFooter>
-        <Button color="secondary" onClick={toggleModalOpen}>
-          Zavrieť
-        </Button>
-      </ModalFooter>
-    </Modal>
+    <div className="search-results-panel">
+      <button type="button" className="close" onClick={toggleModalOpen}>
+        <span>&times;</span>
+      </button>
+      {entitySearchFor && `${plurality(entitySearchEids.length)} pre "${entitySearchFor}".`}
+      <EntitySearchResult />
+    </div>
   )
 }
 
@@ -94,7 +62,6 @@ export default compose(
   connect(
     (state) => ({
       entitySearchValue: entitySearchValueSelector(state),
-      entitySearchModalOpen: entitySearchModalOpenSelector(state),
       entitySearchEids: entitySearchEidsSelector(state),
       entitySearchFor: entitySearchForSelector(state),
     }),

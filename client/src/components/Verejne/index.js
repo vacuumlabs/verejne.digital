@@ -12,6 +12,7 @@ import {
 } from '../../actions/verejneActions'
 import {updateValue} from '../../actions/sharedActions'
 import {
+  entitySearchModalOpenSelector,
   autocompleteValueSelector,
   autocompleteOptionsSelector,
   openedAddressDetailSelector,
@@ -35,10 +36,10 @@ const Verejne = ({
   entitySearchValue,
   setEntitySearchValue,
   findEntities,
+  entitySearchModalOpen,
 }) => (
   <div className="wrapper">
     <div className="verejne-side-panel">
-      <EntitySearch />
       <Form onSubmit={findEntities}>
         <FormGroup>
           <Input
@@ -59,6 +60,7 @@ const Verejne = ({
           className="form-control"
         />
       </FormGroup>
+      {entitySearchModalOpen && <EntitySearch />}
       {openedAddressId && <AddressDetail addressId={openedAddressId} />}
     </div>
     <Map />
@@ -73,6 +75,7 @@ export default compose(
       autocompleteOptions: autocompleteOptionsSelector(state),
       openedAddressId: openedAddressDetailSelector(state),
       entitySearchValue: entitySearchValueSelector(state),
+      entitySearchModalOpen: entitySearchModalOpenSelector(state),
     }),
     {updateValue, zoomToLocation, toggleModalOpen, setEntitySearchFor}
   ),
